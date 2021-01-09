@@ -2,6 +2,7 @@
 
 from mpi4py import MPI
 import sys
+import numpy as np
 
 comm = MPI.COMM_WORLD
 my_rank = comm.Get_rank()
@@ -16,14 +17,19 @@ def f(x):
 def integ(func, x_arr):
     # trapezoidal sum given function and list of x values
     area = 0
-    for i in range(x_arr-1):
-        area += (1/2)(func(x_arr[i]) + func(x_arr[i+1]))*abs(x_arr[i+1]-x_arr[i])
+    for i in range(len(x_arr)-1):
+        area += (1/2)*(func(x_arr[i]) + func(x_arr[i+1]))*abs(x_arr[i+1]-x_arr[i])
     return area
 
 def get_input():
     # get user input
-    bounds = (input("Integrate from "), input(" to "))
-    return bounds
+    try:
+        a = input("Integrate from ")
+        b = input(" to ")
+        return (float(a), float(b))
+    
+    except EOFError as e:
+        print(e)
 
 
 interval = get_input()
