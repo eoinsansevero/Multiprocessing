@@ -11,6 +11,9 @@ to execute code:
 $ mpirun -np <number_of_processes> python <filename>
 '''
 
+# I wrote this comment using vim. 
+
+
 comm = MPI.COMM_WORLD
 my_rank = comm.Get_rank() # when all the copies run this, they each get a rank
 size = comm.Get_size()
@@ -25,5 +28,4 @@ else:
     for procid in range(1, size):
         message = comm.recv(source=procid)
         print(f"Message from process {procid}: {message}")
-
 MPI.Finalize
